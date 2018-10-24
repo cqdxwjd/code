@@ -1,0 +1,21 @@
+#!/usr/bin/expect
+set from	[lindex $argv 0]
+set hostname [lindex $argv 1]
+spawn ssh-copy-id $from@$hostname
+expect {
+	"*assword*" { # "*password*"和左大括号之见一定要留间隔，否则不能识别 
+    send wanger\n
+    expect "*check*"
+    send_user "add to $hostname successful!\n"
+  }
+	"*yes/no*" {
+		send yes\n
+    expect "*assword*"
+    send wanger\n
+    expect "*check*"
+    send_user "add to $hostname successful!\n"
+	}
+	"*check*" {
+		send_user "already added to $hostname!\n"
+  }
+}

@@ -1,0 +1,16 @@
+#!/bin/bash
+current_host=`hostname`
+dirname=/home/wanger/code/passphraseless
+input=$dirname/machines
+# echo $current_host
+$dirname/passphraseless_onetomutiple.sh wanger
+
+for hostname in `awk	'$1' $input`
+do
+if [ $hostname != $current_host ];
+then
+	scp -r ../passphraseless wanger@$hostname:/home/wanger/code/
+	$dirname/scp.expect $hostname
+	ssh wanger@$hostname $dirname/passphraseless_onetomutiple.sh wanger
+fi
+done

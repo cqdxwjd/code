@@ -1,0 +1,20 @@
+#!/usr/bin/expect
+spawn ssh-keygen
+expect "*id_rsa*"
+send \n
+expect {
+        "*verwrite*" {
+                send y\n
+                expect "*passphrase*"
+                send \n
+                expect "*again*"
+                send \n
+        }
+        "*assphrase*" {
+                send \n
+                expect "*again*"
+                send \n
+        }
+}
+expect "*randomart*"
+send_user "generate successful\n"
