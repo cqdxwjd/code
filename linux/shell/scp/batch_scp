@@ -1,5 +1,5 @@
 #!/bin/bash
 for i in 2 3 4
 do
-	expect -f /root/softs/shell/auto_scp $1 "root@hadoop$i:$2"
+	expect -f $PWD/auto_scp $1 "root@hadoop$i:$2"
 done
